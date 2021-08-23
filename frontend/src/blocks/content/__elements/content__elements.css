@@ -1,0 +1,9 @@
+.content__elements {
+    margin-bottom: 67px;
+}
+
+@media screen and (max-width: 644px) {
+    .content__elements {
+        margin-bottom: 48px;
+    }
+}

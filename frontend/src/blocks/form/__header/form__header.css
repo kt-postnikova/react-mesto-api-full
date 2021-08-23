@@ -1,0 +1,18 @@
+.form__header {
+    color: #000;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 22px;
+    margin: 0;
+    margin-top: 25px;
+    margin-bottom: 75px;
+    align-self: start;
+  }
+
+  @media screen and (min-width: 978px) {
+    .form__header {
+        font-size: 24px;
+        margin-top: 34px;
+        margin-bottom: 54px;
+    }
+}

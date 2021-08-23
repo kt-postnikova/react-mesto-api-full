@@ -1,0 +1,9 @@
+.form__error {
+    font-size: 12px;
+    line-height: 15px;
+    position: absolute;
+    top: 33px;
+    left: 0;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
