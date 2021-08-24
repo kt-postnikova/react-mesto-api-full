@@ -2,7 +2,7 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function EditProfilePopup(props) {
+function EditProfilePopup({ onUpdateUser, isOpen, onClose }) {
 
     const currentUser = React.useContext(CurrentUserContext);
 
@@ -20,7 +20,7 @@ function EditProfilePopup(props) {
     function handleSubmit(e) {
         e.preventDefault();
 
-        props.onUpdateUser({
+        onUpdateUser({
             name,
             about: description,
         });
@@ -30,13 +30,13 @@ function EditProfilePopup(props) {
     React.useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about)
-    }, [currentUser, props.isOpen])
+    }, [currentUser, isOpen])
 
 
     return (
         <PopupWithForm
-            isOpen={props.isOpen}
-            onClose={props.onClose}
+            isOpen={isOpen}
+            onClose={onClose}
             onSubmit={handleSubmit}
             name="user-info"
             title="Редактировать профиль"
