@@ -54,7 +54,7 @@ app.use(limiter);
 
 const allowedCors = [
   'http://project.mesto.nomoredomains.rocks',
-  'https://project.mesto.nomoredomains.rocks',
+  'https://api.project.mesto.nomoredomains.club',
   'localhost:3000',
 ];
 
