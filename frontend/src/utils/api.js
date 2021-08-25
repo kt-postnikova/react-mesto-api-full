@@ -105,7 +105,6 @@ const api = new Api({
     baseUrl: 'https://api.project.mesto.nomoredomains.club',
     headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://api.project.mesto.nomoredomains.club/users/me'
     }
 });
 
