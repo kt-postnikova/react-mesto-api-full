@@ -20,7 +20,7 @@ const app = express();
 
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/cards', (req, res) => {
   res.json({ msg: 'This is CORS-enabled for all origins!' });
 });
 
