@@ -3,7 +3,6 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const userRouter = require('./routes/user');
@@ -18,10 +17,8 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-app.use(cors());
-
 app.get('/', (req, res) => {
-  res.send({ msg: 'This is CORS-enabled for all origins!' });
+  res.set('Access-Control-Allow-Origin', '*');
 });
 
 app.use(bodyParser.json());
