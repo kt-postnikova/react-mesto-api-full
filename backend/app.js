@@ -18,7 +18,8 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-app.use(cors());
+// app.use(cors({ origin: ['http://project.mesto.nomoredomains.rocks', 'https://localhost:3000', 'https://localhost:3001'] }));
+app.use(cors);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,7 +44,7 @@ app.use(errors());
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
-  res.status(statusCode).send({ message: statusCode === 500 ? 'ffff' : message });
+  res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
 
   next();
 });
