@@ -19,7 +19,7 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 // app.use(cors({ origin: ['http://project.mesto.nomoredomains.rocks', 'https://localhost:3000', 'https://localhost:3001'] }));
-app.use(cors({ credentials: true, origin: 'http://project.mesto.nomoredomains.rocks' }));
+app.use(cors({ credentials: true, origin: 'http://api.project.mesto.nomoredomains.club' }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
