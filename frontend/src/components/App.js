@@ -46,6 +46,8 @@ function App() {
         const cardsArray = res[0];
         const userInfo = res[1];
 
+        console.log('ggggg');
+
         setCards(cardsArray);
         setCurrentUser(userInfo)
       })
