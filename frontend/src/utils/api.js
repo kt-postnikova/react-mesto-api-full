@@ -17,7 +17,7 @@ class Api extends React.Component {
 
     getCards() {
         return fetch(this.baseUrl + `/cards`, {
-            credentials: 'include',
+            // credentials: 'include',
             headers: this.headers,
         })
             .then(this._getResponseData)
@@ -75,6 +75,7 @@ class Api extends React.Component {
     getUserInfo() {
         return fetch(this.baseUrl + `/users/me`, {
             // credentials: 'include',
+            method: 'GET',
             headers: this.headers,
         })
             .then(this._getResponseData)

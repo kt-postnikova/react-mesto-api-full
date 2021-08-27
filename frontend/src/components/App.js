@@ -37,24 +37,34 @@ function App() {
   const history = useHistory();
 
 
-  React.useEffect(() => {
-    Promise.all([
-      api.getCards(),
+  // React.useEffect(() => {
+  //   Promise.all([
+  //     api.getCards(),
+  //     api.getUserInfo()
+  //   ])
+  //     .then(res => {
+  //       const cardsArray = res[0];
+  //       const userInfo = res[1];
+
+  //       console.log(userInfo);
+
+  //       setCards(cardsArray);
+  //       setCurrentUser(userInfo)
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }, [])
+
+  useEffect(() => {
+    if (loggedIn) {
       api.getUserInfo()
-    ])
-      .then(res => {
-        const cardsArray = res[0];
-        const userInfo = res[1];
-
-        console.log('ggggg');
-
-        setCards(cardsArray);
-        setCurrentUser(userInfo)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, [])
+        .then((user) => {
+          setCurrentUser(user.currentUser)
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [loggedIn])
 
 
 
