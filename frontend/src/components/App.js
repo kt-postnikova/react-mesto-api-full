@@ -56,15 +56,6 @@ function App() {
   //     })
   // }, [])
 
-  useEffect(() => {
-    if (loggedIn) {
-      api.getUserInfo()
-        .then((user) => {
-          setCurrentUser(user.currentUser)
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [loggedIn])
 
 
 
@@ -215,6 +206,15 @@ function App() {
     history.push('/signin');
   }
 
+  useEffect(() => {
+    if (loggedIn) {
+      api.getUserInfo()
+        .then((user) => {
+          setCurrentUser(user.currentUser)
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [loggedIn])
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header loggedIn={loggedIn} email={email} onSignOut={signOut} />
