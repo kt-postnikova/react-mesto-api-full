@@ -17,7 +17,7 @@ class Api extends React.Component {
 
     getCards() {
         return fetch(this.baseUrl + `/cards`, {
-            // credentials: 'include',
+            credentials: 'include',
             headers: this.headers,
         })
             .then(this._getResponseData)
@@ -111,7 +111,7 @@ class Api extends React.Component {
 const api = new Api({
     baseUrl: 'https://api.project.mesto.nomoredomains.club',
     // baseUrl: 'http://localhost:3000',
-    // credentials: 'include',
+    credentials: 'include',
     headers: {
         'Content-Type': 'application/json',
     }
