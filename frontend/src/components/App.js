@@ -148,6 +148,55 @@ function App() {
 
   }
 
+  useEffect(() => {
+    if (loggedIn) {
+      api.getCards()
+        .then((cards) => {
+          setCards(cards.data.reverse())
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [loggedIn])
+
+  useEffect(() => {
+    if (loggedIn) {
+      api.getUserInfo()
+        .then((user) => {
+          console.log(user);
+          setCurrentUser(user.currentUser)
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [loggedIn])
+
+  React.useEffect(() => {
+    tokenCheck()
+  }, [])
+
+  function tokenCheck() {
+    // const token = localStorage.getItem('token');
+    // if (token) {
+    //   apiAuth.getContent(token)
+    //     .then(res => {
+    //       if (res) {
+    //         setLoggedIn(true);
+    //         setEmail(res.data.email);
+    //         history.push('./main-page')
+    //       }
+    //     })
+    apiAuth.getContent()
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          setEmail(res.data.email);
+          history.push('./main-page')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   function handleRegisterSubmit(password, email) {
     apiAuth.register(password, email)
       .then(() => {
@@ -178,44 +227,19 @@ function App() {
       })
   }
 
-
-  function tokenCheck() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      apiAuth.getContent(token)
-        .then(res => {
-          if (res) {
-            setLoggedIn(true);
-            setEmail(res.data.email);
-            history.push('./main-page')
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
-  }
-
-  React.useEffect(() => {
-    tokenCheck()
-  }, [])
+  // function signOut() {
+  //   localStorage.removeItem('token');
+  //   setLoggedIn(false);
+  //   history.push('/signin');
+  // }
 
   function signOut() {
-    localStorage.removeItem('token');
+    apiAuth.logout();
     setLoggedIn(false);
+    setCurrentUser({});
     history.push('/signin');
   }
 
-  useEffect(() => {
-    if (loggedIn) {
-      api.getUserInfo()
-        .then((user) => {
-          console.log(user);
-          setCurrentUser(user.currentUser)
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [loggedIn])
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Header loggedIn={loggedIn} email={email} onSignOut={signOut} />

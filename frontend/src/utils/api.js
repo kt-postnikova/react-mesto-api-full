@@ -17,7 +17,7 @@ class Api extends React.Component {
 
     getCards() {
         return fetch(this.baseUrl + `/cards`, {
-            // credentials: 'include',
+            credentials: 'include',
             headers: this.headers,
         })
             .then(this._getResponseData)
@@ -25,7 +25,7 @@ class Api extends React.Component {
 
     createCard(inputValues) {
         return fetch(this.baseUrl + `/cards`, {
-            // credentials: 'include',
+            credentials: 'include',
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify({
@@ -38,7 +38,7 @@ class Api extends React.Component {
 
     deleteCard(cardId) {
         return fetch(this.baseUrl + `/cards/${cardId}`, {
-            // credentials: 'include',
+            credentials: 'include',
             method: 'DELETE',
             headers: this.headers,
         })
@@ -48,7 +48,7 @@ class Api extends React.Component {
 
     changeLikeCardStatus(cardId, isLiked) {
         return fetch(this.baseUrl + `/cards/${cardId}/likes/`, {
-            // credentials: 'include',
+            credentials: 'include',
             method: `${isLiked ? 'PUT' : 'DELETE'}`,
             headers: this.headers
         })
@@ -74,7 +74,7 @@ class Api extends React.Component {
 
     getUserInfo() {
         return fetch(this.baseUrl + `/users/me`, {
-            // credentials: 'include',
+            credentials: 'include',
             method: 'GET',
             headers: this.headers,
         })
@@ -83,7 +83,7 @@ class Api extends React.Component {
 
     editUserInfo(inputValues) {
         return fetch(this.baseUrl + `/users/me`, {
-            // credentials: 'include',
+            credentials: 'include',
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
@@ -97,7 +97,7 @@ class Api extends React.Component {
 
     editAvatar(inputValues) {
         return fetch(this.baseUrl + `/users/me/avatar`, {
-            // credentials: 'include',
+            credentials: 'include',
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
