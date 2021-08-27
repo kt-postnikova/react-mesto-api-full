@@ -210,6 +210,7 @@ function App() {
     if (loggedIn) {
       api.getUserInfo()
         .then((user) => {
+          console.log(user);
           setCurrentUser(user.currentUser)
         })
         .catch((err) => console.log(err))
