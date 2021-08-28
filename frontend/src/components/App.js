@@ -211,21 +211,38 @@ function App() {
       })
   }
 
+  // function handleAuthSubmit(password, email) {
+  //   apiAuth.authorize(password, email)
+  //     .then(data => {
+  //       if (data.token) {
+  //         localStorage.setItem('token', data.token)
+  //       }
+  //       setLoggedIn(true);
+  //       setEmail(email);
+  //       history.push('./main-page')
+  //     })
+  //     .catch(() => {
+  //       setInfoTooltipOpen(true);
+  //       setMessage({ image: errorImage, info: 'Что-то пошло не так! Попробуйте ещё раз.' })
+  //     })
+  // }
+
   function handleAuthSubmit(password, email) {
     apiAuth.authorize(password, email)
-      .then(data => {
-        if (data.token) {
-          localStorage.setItem('token', data.token)
-        }
-        setLoggedIn(true);
-        setEmail(email);
-        history.push('./main-page')
+      .then((data) => {
+        apiAuth.getContent(data.token)
+          .then((res) => {
+            setEmail(email);
+            setLoggedIn(true);
+            history.push('./main-page')
+          })
       })
       .catch(() => {
         setInfoTooltipOpen(true);
         setMessage({ image: errorImage, info: 'Что-то пошло не так! Попробуйте ещё раз.' })
       })
   }
+
 
   // function signOut() {
   //   localStorage.removeItem('token');
