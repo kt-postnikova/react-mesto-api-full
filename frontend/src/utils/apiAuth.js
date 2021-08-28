@@ -32,7 +32,7 @@ export const getContent = (token) => {
         credentials: 'include',
         method: 'GET',
         headers: {
-            "Authorization": `Bearer ${token}`,
+            // "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
         }
     })
