@@ -4,9 +4,10 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const { JWT_SECRET = 'dev-key' } = process.env;
 
 module.exports = (req, res, next) => {
-  const { authorization } = req.headers;
+  // const { authorization } = req.headers;
 
-  const token = authorization.replace('Bearer ', '');
+  // const token = authorization.replace('Bearer ', '');
+  const token = req.cookie.jwt;
   let playload;
 
   try {
