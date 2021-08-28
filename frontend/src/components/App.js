@@ -37,24 +37,24 @@ function App() {
   const history = useHistory();
 
 
-  // React.useEffect(() => {
-  //   Promise.all([
-  //     api.getCards(),
-  //     api.getUserInfo()
-  //   ])
-  //     .then(res => {
-  //       const cardsArray = res[0];
-  //       const userInfo = res[1];
+  React.useEffect(() => {
+    if (loggedIn) {
+      Promise.all([
+        api.getCards(),
+        api.getUserInfo()
+      ])
+        .then(res => {
+          const cardsArray = res[0];
+          const userInfo = res[1];
 
-  //       console.log(userInfo);
-
-  //       setCards(cardsArray);
-  //       setCurrentUser(userInfo)
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }, [])
+          setCards(cardsArray);
+          setCurrentUser(userInfo)
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  }, [])
 
 
 
@@ -148,26 +148,26 @@ function App() {
 
   }
 
-  useEffect(() => {
-    if (loggedIn) {
-      api.getCards()
-        .then((cards) => {
-          setCards(cards.data.reverse())
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [loggedIn])
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     api.getCards()
+  //       .then((cards) => {
+  //         setCards(cards.data.reverse())
+  //       })
+  //       .catch((err) => console.log(err))
+  //   }
+  // }, [loggedIn])
 
-  useEffect(() => {
-    if (loggedIn) {
-      api.getUserInfo()
-        .then((user) => {
-          console.log(user);
-          setCurrentUser(user.currentUser)
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [loggedIn])
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     api.getUserInfo()
+  //       .then((user) => {
+  //         console.log(user);
+  //         setCurrentUser(user.currentUser)
+  //       })
+  //       .catch((err) => console.log(err))
+  //   }
+  // }, [loggedIn])
 
   React.useEffect(() => {
     tokenCheck()

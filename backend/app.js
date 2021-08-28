@@ -1,6 +1,5 @@
 const express = require('express');
 require('dotenv').config();
-// const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
@@ -17,17 +16,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { PORT = 3001 } = process.env;
 
 const app = express();
-
-// app.use(cors({
-//   origin: 'https://project.mesto.nomoredomains.rocks',
-//   methods: ['GET', 'PUT', 'POST', 'DELETE'],
-//   allowedHeaders: ['Authorization', 'Content-Type'],
-//   credentials: true,
-//   optionsSuccessStatus: 200,
-// }));
-
-// app.use(cors({ origin: ['http://project.mesto.nomoredomains.rocks', 'https://localhost:3000', 'https://localhost:3001'] }));
-// app.use(cors({ credentials: true, origin: 'http://project.mesto.nomoredomains.rocks' }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -63,31 +51,6 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-
-// const allowedCors = [
-//   'http://project.mesto.nomoredomains.rocks',
-//   'https://api.project.mesto.nomoredomains.club',
-//   'localhost:3000',
-// ];
-
-// app.use((req, res, next) => {
-//   const { origin } = req.headers;
-//   const { method } = req;
-//   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-//   const requestHeaders = req.headers['access-control-request-headers'];
-//   if (allowedCors.includes(origin)) {
-//     res.header('Access-Control-Allow-Origin', origin);
-//   }
-//   if (method === 'OPTIONS') {
-//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-//     res.header('Access-Control-Allow-Headers', requestHeaders);
-
-//     return res.status(200).send();
-//   }
-
-//   next();
-//   return null;
-// });
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,

@@ -3,11 +3,12 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 
 const { JWT_SECRET = 'dev-key' } = process.env;
 
-module.exports = (req, res, next) => {
+module.exports = (req) => {
   // const { authorization } = req.headers;
 
   // const token = authorization.replace('Bearer ', '');
   const token = req.cookie.jwt;
+  console.log('token');
   let playload;
 
   try {
@@ -16,5 +17,5 @@ module.exports = (req, res, next) => {
     throw new UnauthorizedError('Необходимо авторизоваться');
   }
   req.user = playload;
-  next();
+  // next();
 };
