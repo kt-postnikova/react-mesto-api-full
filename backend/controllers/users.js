@@ -91,7 +91,7 @@ const updateUserAvatar = (req, res, next) => {
 };
 
 const getUserInfo = (req, res, next) => {
-  User.findById(req.user._id)
+  User.findById(req.user.id)
     .then((user) => res.send(user))
     .catch(next);
 };

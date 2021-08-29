@@ -37,26 +37,26 @@ function App() {
   const history = useHistory();
 
 
-  React.useEffect(() => {
-    // if (loggedIn) {
-    //   console.log('###########################');
-    //   console.log(loggedIn);
-    Promise.all([
-      api.getCards(),
-      api.getUserInfo()
-    ])
-      .then(([cardsArray, userInfo]) => {
-        console.log(userInfo);
-        // const cardsArray = res[0];
-        // const userInfo = res[1];
-        setCurrentUser(userInfo)
-        setCards(cardsArray);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    // }
-  }, [])
+  // React.useEffect(() => {
+  //   // if (loggedIn) {
+  //   //   console.log('###########################');
+  //   //   console.log(loggedIn);
+  //   Promise.all([
+  //     api.getCards(),
+  //     api.getUserInfo()
+  //   ])
+  //     .then(([cardsArray, userInfo]) => {
+  //       console.log(userInfo);
+  //       // const cardsArray = res[0];
+  //       // const userInfo = res[1];
+  //       setCurrentUser(userInfo)
+  //       setCards(cardsArray);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  //   // }
+  // }, [])
 
 
 
@@ -172,6 +172,29 @@ function App() {
   // }, [loggedIn])
 
   React.useEffect(() => {
+    // if (loggedIn) {
+    //   console.log('###########################');
+    //   console.log(loggedIn);
+    if (loggedIn) {
+      Promise.all([
+        api.getCards(),
+        api.getUserInfo()
+      ])
+        .then(([cardsArray, userInfo]) => {
+          console.log(userInfo);
+          // const cardsArray = res[0];
+          // const userInfo = res[1];
+          setCurrentUser(userInfo)
+          setCards(cardsArray);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    // }
+  }, [loggedIn])
+
+  React.useEffect(() => {
     tokenCheck()
   }, [])
 
@@ -231,11 +254,11 @@ function App() {
 
   function handleAuthSubmit(password, email) {
     apiAuth.authorize(password, email)
-      .then((token) => {
-        apiAuth.getContent(token)
+      .then((data) => {
+        apiAuth.getContent(data.token)
           .then((res) => {
-            setEmail(email);
             setLoggedIn(true);
+            setEmail(email);
             history.push('./main-page')
           })
       })
