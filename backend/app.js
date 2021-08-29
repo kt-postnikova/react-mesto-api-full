@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const userRouter = require('./routes/user');
 const cardsRouter = require('./routes/card');
@@ -12,19 +11,15 @@ const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { loginValidator, registrationValidator } = require('./middlewares/validation');
 const NotFoundError = require('./errors/NotFoundError');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
-
-app.use(cors({ origin: 'http://localhost:3000', methods: ['POST', 'DELETE', 'GET', 'PUT', 'PATCH'], allowedHeaders: ['Content-Type', 'Authorization'], credentials: true }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
-app.use(requestLogger);
 
 app.post('/signin', loginValidator, login);
 app.post('/signup', registrationValidator, createUser);
@@ -32,8 +27,6 @@ app.post('/signup', registrationValidator, createUser);
 app.use(auth);
 app.use('/', userRouter);
 app.use('/', cardsRouter);
-
-app.use(errorLogger);
 
 app.use('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');

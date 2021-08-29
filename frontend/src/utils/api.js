@@ -16,16 +16,14 @@ class Api extends React.Component {
     }
 
     getCards() {
-        return fetch(this.baseUrl + `/cards`, {
-            credentials: 'include',
+        return fetch(`${this.baseUrl}` + '/cards', {
             headers: this.headers,
         })
             .then(this._getResponseData)
     }
 
     createCard(inputValues) {
-        return fetch(this.baseUrl + `/cards`, {
-            credentials: 'include',
+        return fetch(`${this.baseUrl}` + '/cards', {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify({
@@ -37,8 +35,7 @@ class Api extends React.Component {
     }
 
     deleteCard(cardId) {
-        return fetch(this.baseUrl + `/cards/${cardId}`, {
-            credentials: 'include',
+        return fetch(`${this.baseUrl}` + '/cards/' + `${cardId}`, {
             method: 'DELETE',
             headers: this.headers,
         })
@@ -47,8 +44,7 @@ class Api extends React.Component {
 
 
     changeLikeCardStatus(cardId, isLiked) {
-        return fetch(this.baseUrl + `/cards/${cardId}/likes/`, {
-            credentials: 'include',
+        return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
             method: `${isLiked ? 'PUT' : 'DELETE'}`,
             headers: this.headers
         })
@@ -73,17 +69,14 @@ class Api extends React.Component {
     // }
 
     getUserInfo() {
-        return fetch(this.baseUrl + `/users/me`, {
-            credentials: 'include',
-            method: 'GET',
-            headers: this.headers,
+        return fetch(`${this.baseUrl}` + '/users/me', {
+            headers: this.headers
         })
             .then(this._getResponseData)
     }
 
     editUserInfo(inputValues) {
-        return fetch(this.baseUrl + `/users/me`, {
-            credentials: 'include',
+        return fetch(`${this.baseUrl}` + '/users/me', {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
@@ -96,8 +89,7 @@ class Api extends React.Component {
 
 
     editAvatar(inputValues) {
-        return fetch(this.baseUrl + `/users/me/avatar`, {
-            credentials: 'include',
+        return fetch(`${this.baseUrl}` + '/users/me/avatar', {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
@@ -110,11 +102,10 @@ class Api extends React.Component {
 }
 
 const api = new Api({
-    // baseUrl: 'https://api.project.mesto.nomoredomains.club',
-    baseUrl: 'http://localhost:3000',
-    credentials: 'include',
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
     headers: {
-        'Content-Type': 'application/json',
+        authorization: 'be14df10-ef56-405e-9870-1c2d83310783',
+        'Content-Type': 'application/json'
     }
 });
 

@@ -38,7 +38,6 @@ const userSchema = new mongoose.Schema({
         return /(http|https):\/\/(www)*[a-z0-9\-._~:/?#[\]@!$&'()*+,;=]+#*/g.test(v);
       },
     },
-    default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
   },
 }, { versionKey: false });
 

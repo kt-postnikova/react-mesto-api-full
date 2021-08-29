@@ -25,7 +25,6 @@
       {
         "multiline": true
       }
-    ],
-    "func-names": "off"
+    ]
   }
 }

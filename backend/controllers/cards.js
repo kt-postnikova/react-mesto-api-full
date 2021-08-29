@@ -4,15 +4,12 @@ const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
 const getCards = (req, res, next) => {
-  const userId = req.user._id;
-  Card.find({ owner: userId })
+  Card.find({})
     .then((cards) => {
-      // if (cards.length === 0) {
-      //   res.send('');
-      // } else {
-      //   res.send(cards);
-      // }
-      res.send(cards);
+      if (cards.length === 0) {
+        throw new NotFoundError('Карточки не найдены');
+      }
+      res.send({ data: cards });
     })
     .catch(next);
 };
@@ -22,7 +19,7 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
 
   Card.create({ name, link, owner })
-    .then((cards) => res.send(cards))
+    .then((cards) => res.send({ data: cards }))
     .catch((err) => {
       if (err.statusCode === 400) {
         throw new BadRequestError('Переданы некорректные данные');
@@ -42,7 +39,7 @@ const deleteCard = (req, res, next) => {
             if (!deletedCard) {
               throw new NotFoundError('Карточка не найдена');
             }
-            res.send(deletedCard);
+            res.send({ data: deletedCard });
           });
       } else {
         throw new ForbiddenError('Нет доступа к данным');
@@ -65,7 +62,7 @@ const putLike = (req, res, next) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
       }
-      res.send(card);
+      res.send({ data: card });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -84,7 +81,7 @@ const deleteLike = (req, res, next) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
       }
-      res.send(card);
+      res.send({ data: card });
     })
     .catch((err) => {
       if (err.name === 'CastError') {

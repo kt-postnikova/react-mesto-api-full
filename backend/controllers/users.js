@@ -5,7 +5,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const BadRequestError = require('../errors/BadRequestError');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET = 'dev-key' } = process.env;
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -13,7 +13,7 @@ const getUsers = (req, res, next) => {
       if (users.length === 0) {
         throw new NotFoundError('Пользователи не найдены');
       }
-      res.send(users);
+      res.send({ data: users });
     })
     .catch(next);
 };
@@ -24,7 +24,7 @@ const getUserById = (req, res, next) => {
       if (!users) {
         throw new NotFoundError('Пользователь не найден');
       }
-      res.send(users);
+      res.send({ data: users });
     })
     .catch(next);
 };
@@ -58,9 +58,9 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
 
-      res.cookie('jwt', token, { maxAge: 3600000, httpOnly: true }).send({ message: 'token' });
+      res.cookie('jwt', token, { maxAge: 3600000, httpOnly: true }).send({ token });
     })
     .catch(next);
 };
@@ -69,7 +69,7 @@ const updateUserProfile = (req, res, next) => {
   const { name, about } = req.body;
 
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
-    .then((user) => res.send(user))
+    .then((user) => res.send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         throw new BadRequestError('Переданы некорректные данные');
@@ -81,7 +81,7 @@ const updateUserProfile = (req, res, next) => {
 const updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-    .then((userAvatar) => res.send(userAvatar))
+    .then((userAvatar) => res.send({ data: userAvatar }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         throw new BadRequestError('Переданы некорректные данные');
@@ -92,7 +92,7 @@ const updateUserAvatar = (req, res, next) => {
 
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
-    .then((user) => res.send(user))
+    .then((user) => res.send({ data: user }))
     .catch(next);
 };
 

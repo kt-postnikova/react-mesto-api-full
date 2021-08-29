@@ -37,27 +37,22 @@ function App() {
   const history = useHistory();
 
 
-  // React.useEffect(() => {
-  //   // if (loggedIn) {
-  //   //   console.log('###########################');
-  //   //   console.log(loggedIn);
-  //   Promise.all([
-  //     api.getCards(),
-  //     api.getUserInfo()
-  //   ])
-  //     .then(([cardsArray, userInfo]) => {
-  //       console.log(userInfo);
-  //       // const cardsArray = res[0];
-  //       // const userInfo = res[1];
-  //       setCurrentUser(userInfo)
-  //       setCards(cardsArray);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  //   // }
-  // }, [])
+  React.useEffect(() => {
+    Promise.all([
+      api.getCards(),
+      api.getUserInfo()
+    ])
+      .then(res => {
+        const cardsArray = res[0];
+        const userInfo = res[1];
 
+        setCards(cardsArray);
+        setCurrentUser(userInfo)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [])
 
 
 
@@ -85,8 +80,8 @@ function App() {
     setSelectedCard(card)
   }
 
-  function handleUpdateUser(user) {
-    api.editUserInfo(user)
+  function handleUpdateUser(card) {
+    api.editUserInfo(card)
       .then(res => {
         setCurrentUser(res);
 
@@ -112,7 +107,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i === currentUser._id);
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
 
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -150,78 +145,6 @@ function App() {
 
   }
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     api.getCards()
-  //       .then((cards) => {
-  //         setCards(cards.data.reverse())
-  //       })
-  //       .catch((err) => console.log(err))
-  //   }
-  // }, [loggedIn])
-
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     api.getUserInfo()
-  //       .then((user) => {
-  //         console.log(user);
-  //         setCurrentUser(user.currentUser)
-  //       })
-  //       .catch((err) => console.log(err))
-  //   }
-  // }, [loggedIn])
-
-  React.useEffect(() => {
-    // if (loggedIn) {
-    //   console.log('###########################');
-    //   console.log(loggedIn);
-    if (loggedIn) {
-      Promise.all([
-        api.getCards(),
-        api.getUserInfo()
-      ])
-        .then(([cardsArray, userInfo]) => {
-          console.log(userInfo);
-          // const cardsArray = res[0];
-          // const userInfo = res[1];
-          setCurrentUser(userInfo)
-          setCards(cardsArray);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
-    // }
-  }, [loggedIn])
-
-  React.useEffect(() => {
-    tokenCheck()
-  }, [])
-
-  function tokenCheck(token) {
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   apiAuth.getContent(token)
-    //     .then(res => {
-    //       if (res) {
-    //         setLoggedIn(true);
-    //         setEmail(res.data.email);
-    //         history.push('./main-page')
-    //       }
-    //     })
-    apiAuth.getContent(token)
-      .then((res) => {
-        if (res) {
-          setLoggedIn(true);
-          setEmail(res.email);
-          history.push('./main-page')
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
   function handleRegisterSubmit(password, email) {
     apiAuth.register(password, email)
       .then(() => {
@@ -236,31 +159,15 @@ function App() {
       })
   }
 
-  // function handleAuthSubmit(password, email) {
-  //   apiAuth.authorize(password, email)
-  //     .then(data => {
-  //       if (data.token) {
-  //         localStorage.setItem('token', data.token)
-  //       }
-  //       setLoggedIn(true);
-  //       setEmail(email);
-  //       history.push('./main-page')
-  //     })
-  //     .catch(() => {
-  //       setInfoTooltipOpen(true);
-  //       setMessage({ image: errorImage, info: 'Что-то пошло не так! Попробуйте ещё раз.' })
-  //     })
-  // }
-
   function handleAuthSubmit(password, email) {
     apiAuth.authorize(password, email)
-      .then((token) => {
-        apiAuth.getContent(token)
-          .then((res) => {
-            setLoggedIn(true);
-            setEmail(res.email);
-            history.push('./main-page')
-          })
+      .then(data => {
+        if (data.token) {
+          localStorage.setItem('token', data.token)
+        }
+        setLoggedIn(true);
+        setEmail(email);
+        history.push('./main-page')
       })
       .catch(() => {
         setInfoTooltipOpen(true);
@@ -269,14 +176,29 @@ function App() {
   }
 
 
-  // function signOut() {
-  //   localStorage.removeItem('token');
-  //   setLoggedIn(false);
-  //   history.push('/signin');
-  // }
+  function tokenCheck() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      apiAuth.getContent(token)
+        .then(res => {
+          if (res) {
+            setLoggedIn(true);
+            setEmail(res.data.email);
+            history.push('./main-page')
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  }
+
+  React.useEffect(() => {
+    tokenCheck()
+  }, [])
 
   function signOut() {
-    apiAuth.logout();
+    localStorage.removeItem('token');
     setLoggedIn(false);
     history.push('/signin');
   }
