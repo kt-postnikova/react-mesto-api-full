@@ -198,7 +198,7 @@ function App() {
     tokenCheck()
   }, [])
 
-  function tokenCheck() {
+  function tokenCheck(token) {
     // const token = localStorage.getItem('token');
     // if (token) {
     //   apiAuth.getContent(token)
@@ -209,7 +209,7 @@ function App() {
     //         history.push('./main-page')
     //       }
     //     })
-    apiAuth.getContent()
+    apiAuth.getContent(token)
       .then((res) => {
         if (res) {
           setLoggedIn(true);
@@ -254,11 +254,11 @@ function App() {
 
   function handleAuthSubmit(password, email) {
     apiAuth.authorize(password, email)
-      .then((data) => {
-        apiAuth.getContent(data.token)
+      .then((token) => {
+        apiAuth.getContent(token)
           .then((res) => {
             setLoggedIn(true);
-            setEmail(email);
+            setEmail(res.email);
             history.push('./main-page')
           })
       })
