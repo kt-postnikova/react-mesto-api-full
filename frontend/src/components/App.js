@@ -38,22 +38,24 @@ function App() {
 
 
   React.useEffect(() => {
-    if (loggedIn) {
-      Promise.all([
-        api.getCards(),
-        api.getUserInfo()
-      ])
-        .then(res => {
-          const cardsArray = res[0];
-          const userInfo = res[1];
-
-          setCards(cardsArray);
-          setCurrentUser(userInfo)
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
+    // if (loggedIn) {
+    //   console.log('###########################');
+    //   console.log(loggedIn);
+    Promise.all([
+      api.getCards(),
+      api.getUserInfo()
+    ])
+      .then(([cardsArray, userInfo]) => {
+        console.log(userInfo);
+        // const cardsArray = res[0];
+        // const userInfo = res[1];
+        setCurrentUser(userInfo)
+        setCards(cardsArray);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    // }
   }, [])
 
 
@@ -83,8 +85,8 @@ function App() {
     setSelectedCard(card)
   }
 
-  function handleUpdateUser(card) {
-    api.editUserInfo(card)
+  function handleUpdateUser(user) {
+    api.editUserInfo(user)
       .then(res => {
         setCurrentUser(res);
 
@@ -110,7 +112,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -188,7 +190,7 @@ function App() {
       .then((res) => {
         if (res) {
           setLoggedIn(true);
-          setEmail(res.data.email);
+          setEmail(res.email);
           history.push('./main-page')
         }
       })
@@ -229,8 +231,8 @@ function App() {
 
   function handleAuthSubmit(password, email) {
     apiAuth.authorize(password, email)
-      .then((data) => {
-        apiAuth.getContent(data.token)
+      .then((token) => {
+        apiAuth.getContent(token)
           .then((res) => {
             setEmail(email);
             setLoggedIn(true);
@@ -253,7 +255,6 @@ function App() {
   function signOut() {
     apiAuth.logout();
     setLoggedIn(false);
-    setCurrentUser({});
     history.push('/signin');
   }
 

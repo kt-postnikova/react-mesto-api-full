@@ -11,7 +11,7 @@ frontend/node_modules
 /coverage
 
 # production
-/build
+frontend/build
 
 # misc
 .DS_Store
@@ -37,3 +37,4 @@ npm-debug.log*
 .idea
 .vscode
 .eslintcache
+frontend/build/*
