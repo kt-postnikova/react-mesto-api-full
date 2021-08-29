@@ -102,9 +102,9 @@ class Api extends React.Component {
 }
 
 const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
+    // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
+    baseUrl: 'http://localhost:3000',
     headers: {
-        authorization: 'be14df10-ef56-405e-9870-1c2d83310783',
         'Content-Type': 'application/json'
     }
 });
