@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const userRouter = require('./routes/user');
 const cardsRouter = require('./routes/card');
@@ -17,7 +18,7 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-// app.use(cors({ origin: 'http://localhost:3000', methods: ['POST', 'DELETE', 'GET', 'PUT', 'PATCH'], allowedHeaders: ['Content-Type', 'Authorization'], credentials: true }));
+app.use(cors({ origin: 'http://localhost:3000', methods: ['POST', 'DELETE', 'GET', 'PUT', 'PATCH'], allowedHeaders: ['Content-Type', 'Authorization'], credentials: true }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

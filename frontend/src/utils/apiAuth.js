@@ -1,5 +1,5 @@
-export const BASE_URL = 'https://api.project.mesto.nomoredomains.club';
-// export const BASE_URL = 'http://localhost:3001';
+// export const BASE_URL = 'https://api.project.mesto.nomoredomains.club';
+export const BASE_URL = 'http://localhost:3001';
 
 const getResponse = response => response.ok ? response.json() : Promise.reject(`Ошибка ${response.status}`)
 
