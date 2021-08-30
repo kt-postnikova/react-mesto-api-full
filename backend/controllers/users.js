@@ -101,7 +101,7 @@ const getUserInfo = (req, res, next) => {
 };
 
 const signOut = (req, res, next) => {
-  res.clearCookie('jwt').send({ message: 'OK' });
+  res.clearCookie('jwt', { path: '/' }).status(200).send({ message: 'OK' });
   next();
 };
 
