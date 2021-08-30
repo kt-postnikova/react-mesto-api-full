@@ -36,27 +36,6 @@ function App() {
 
   const history = useHistory();
 
-
-  // React.useEffect(() => {
-  //   Promise.all([
-  //     api.getCards(),
-  //     api.getUserInfo()
-  //   ])
-  //     .then(res => {
-  //       const cardsArray = res[0];
-  //       const userInfo = res[1];
-  //       console.log(userInfo);
-
-  //       setCards(cardsArray);
-  //       setCurrentUser(userInfo)
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }, [])
-
-
-
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
   }
@@ -199,23 +178,6 @@ function App() {
     }
   }, [loggedIn])
 
-  // function tokenCheck() {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     apiAuth.getContent(token)
-  //       .then(res => {
-  //         if (res) {
-  //           setLoggedIn(true);
-  //           setEmail(res.data.email);
-  //           history.push('./main-page')
-  //         }
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       })
-  //   }
-  // }
-
   function tokenCheck() {
     apiAuth.checkToken()
       .then((res) => {
@@ -236,14 +198,6 @@ function App() {
     localStorage.removeItem('token');
     setLoggedIn(false);
     history.push('/signin');
-    // apiAuth.signOut()
-    //   .then(() => {
-    //     setLoggedIn(false);
-    //     history.push('/signin');
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   })
   }
 
   return (
