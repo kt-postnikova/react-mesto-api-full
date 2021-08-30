@@ -53,13 +53,13 @@ export const checkToken = () => {
         .then(getResponse)
 }
 
-// export const signOut = () => {
-//     return fetch(`${BASE_URL}/signout`, {
-//         method: 'DELETE',
-//         credentials: 'include',
-//         headers: {
-//             "Content-Type": "application/json",
-//         }
-//     })
-//         .then(getResponse)
-// };
+export const signOut = () => {
+    return fetch(`${BASE_URL}/signout`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+        .then(getResponse)
+};

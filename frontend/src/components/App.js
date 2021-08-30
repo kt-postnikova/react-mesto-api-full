@@ -205,14 +205,9 @@ function App() {
 
 
   function signOut() {
-    // apiAuth.signOut()
-    //   .then(() => {
-    //     setLoggedIn(false);
-    //     history.push('/signin');
-    //   })
-    history.push('/signin');
-    setLoggedIn(false);
-    cookies.remove('jwt');
+    apiAuth.signOut()
+    setLoggedIn(false)
+    history.push('/signin')
   }
 
   return (
