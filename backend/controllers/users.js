@@ -100,9 +100,8 @@ const getUserInfo = (req, res, next) => {
     .catch(next);
 };
 
-const signOut = (req, res, next) => {
-  res.clearCookie('jwt', { domain: 'api.project.mesto.nomoredomains.club', path: '/' }).status(200).send({ message: 'OK' });
-  next();
+const signOut = (req, res) => {
+  res.clearCookie('jwt').send();
 };
 
 /* Метод для теста ошибок */

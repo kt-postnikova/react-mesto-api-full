@@ -39,7 +39,7 @@ app.get('/crash-test', () => {
 
 app.post('/signin', loginValidator, login);
 app.post('/signup', registrationValidator, createUser);
-app.delete('/signout', signOut);
+app.post('/signout', signOut);
 
 app.use(auth);
 app.use('/', userRouter);
