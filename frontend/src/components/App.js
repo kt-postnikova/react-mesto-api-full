@@ -64,10 +64,9 @@ function App() {
   }
 
   function handleUpdateUser(userInfo) {
-    console.log(userInfo);
     api.editUserInfo(userInfo)
       .then(() => {
-        setCurrentUser(userInfo);
+        setCurrentUser(Object.assign(currentUser, userInfo));
         setEditProfilePopupOpen(false);
       })
       .catch(err => {
@@ -79,7 +78,7 @@ function App() {
   function handleUpdateAvatar(userAvatar) {
     api.editAvatar(userAvatar)
       .then(() => {
-        setCurrentUser(userAvatar);
+        setCurrentUser(Object.assign(currentUser, userAvatar));
         setEditAvatarPopupOpen(false)
       })
       .catch(err => {
@@ -173,7 +172,7 @@ function App() {
     if (loggedIn) {
       api.getCards()
         .then((cardsArray) => {
-          setCards(cardsArray);
+          setCards(cardsArray.reverse());
         })
         .catch(err => {
           console.log(err);
@@ -201,18 +200,15 @@ function App() {
   // }, [handleTokenCheck])
 
   function tokenCheck() {
-    if (loggedIn) {
-      history.push('./main-page')
-      // apiAuth.checkToken()
-      //   .then((res) => {
-      //     setLoggedIn(true);
-      //     setEmail(res.email);
-      //     history.push('./main-page')
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   })
-    }
+    apiAuth.checkToken()
+      .then((res) => {
+        setLoggedIn(true);
+        setEmail(res.email);
+        history.push('./main-page')
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   React.useEffect(() => {
