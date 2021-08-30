@@ -8,11 +8,10 @@ const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const userRouter = require('./routes/user');
 const cardsRouter = require('./routes/card');
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, signOut } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { loginValidator, registrationValidator } = require('./middlewares/validation');
 const NotFoundError = require('./errors/NotFoundError');
-const { signOut } = require('./controllers/users');
 
 const { PORT = 3000 } = process.env;
 
