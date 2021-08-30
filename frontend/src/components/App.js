@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import '../index.css';
 import Header from './Header';
@@ -12,14 +12,12 @@ import ImagePopup from './ImagePopup';
 import InfoTooltip from './InfoTooltip';
 import api from '../utils/api';
 import * as apiAuth from '../utils/apiAuth';
-//import apiAuth from '../utils/apiAuth';
 import ProtectedRoute from './ProtectedRoute';
 import Register from './Register';
 import Login from './Login';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import okImage from '../images/ok.svg';
 import errorImage from '../images/error.svg';
-import { useCookies } from "react-cookie";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -36,8 +34,6 @@ function App() {
   const [message, setMessage] = React.useState({ image: '', info: '' });
 
   const history = useHistory();
-
-  const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -180,25 +176,6 @@ function App() {
     }
   }, [loggedIn])
 
-
-  // const handleTokenCheck = React.useCallback(() => {
-  //   if (!loggedIn) {
-  //     apiAuth.checkToken()
-  //       .then((res) => {
-  //         setEmail(res.email);
-  //         setLoggedIn(true);
-  //         history.push('./main-page');
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }, [history])
-
-  // React.useEffect(() => {
-  //   handleTokenCheck();
-  // }, [handleTokenCheck])
-
   function tokenCheck() {
     apiAuth.checkToken()
       .then((res) => {
@@ -214,19 +191,6 @@ function App() {
   React.useEffect(() => {
     tokenCheck()
   }, [])
-
-  // function signOut() {
-  //   localStorage.removeItem('token');
-  //   setLoggedIn(false);
-  //   history.push('/signin');
-  // }
-
-  // const signOut = () => {
-  //   setLoggedIn(false);
-  //   localStorage.removeItem('jwt');
-  //   history.push('/signin');
-  // }
-
 
   function signOut() {
     apiAuth.signOut()

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({ onAddPlace, isOpen, onClose }) {

@@ -6,7 +6,6 @@ const {
   getUserInfo,
   updateUserProfile,
   updateUserAvatar,
-  // signOut,
 } = require('../controllers/users');
 const { idValidator } = require('../middlewares/validation');
 
@@ -16,6 +15,5 @@ usersRouter.get('/users/:id', idValidator, getUserById);
 // usersRouter.delete('/users/:id', deleteUser);
 usersRouter.patch('/users/me', updateUserProfile);
 usersRouter.patch('/users/me/avatar', updateUserAvatar);
-// usersRouter.post('/signout', signOut);
 
 module.exports = usersRouter;

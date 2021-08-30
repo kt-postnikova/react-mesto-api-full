@@ -56,23 +56,6 @@ class Api extends React.Component {
             .then(this._getResponseData)
     }
 
-
-    // putLike(cardId) {
-    //     return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
-    //         method: 'PUT',
-    //         headers: this.headers,
-    //     })
-    //         .then(this._getResponseData)
-    // }
-
-    // deleteLike(cardId) {
-    //     return fetch(`${this.baseUrl}` + '/cards/likes/' + `${cardId}`, {
-    //         method: 'DELETE',
-    //         headers: this.headers,
-    //     })
-    //         .then(this._getResponseData)
-    // }
-
     getUserInfo() {
         return fetch(`${this.baseUrl}` + '/users/me', {
             method: 'GET',
@@ -111,8 +94,6 @@ class Api extends React.Component {
 }
 
 const api = new Api({
-    // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
-    // baseUrl: 'http://localhost:3000',
     baseUrl: 'https://api.project.mesto.nomoredomains.club',
     headers: {
         'Content-Type': 'application/json'
