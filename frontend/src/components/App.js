@@ -197,9 +197,15 @@ function App() {
     tokenCheck()
   }, [])
 
-  function signOut() {
-    localStorage.removeItem('token');
+  // function signOut() {
+  //   localStorage.removeItem('token');
+  //   setLoggedIn(false);
+  //   history.push('/signin');
+  // }
+
+  const signOut = () => {
     setLoggedIn(false);
+    localStorage.removeItem('jwt');
     history.push('/signin');
   }
 
