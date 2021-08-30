@@ -100,10 +100,10 @@ const getUserInfo = (req, res, next) => {
     .catch(next);
 };
 
-const signOut = (req, res, next) => {
-  res.clearCookie('jwt').send({ message: 'dsfsfs' });
-  next();
-};
+// const signOut = (req, res, next) => {
+//   res.clearCookie('jwt').send({ message: 'dsfsfs' });
+//   next();
+// };
 
 /* Метод для теста ошибок */
 
@@ -127,5 +127,5 @@ module.exports = {
   getUserInfo,
   updateUserProfile,
   updateUserAvatar,
-  signOut,
+  // signOut,
 };
