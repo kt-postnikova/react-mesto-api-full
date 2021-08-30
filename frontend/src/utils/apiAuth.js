@@ -56,7 +56,7 @@ export const checkToken = () => {
 
 export const signOut = () => {
     return fetch(`${BASE_URL}/signout`, {
-        method: 'DELETE',
+        method: 'GET',
         credentials: 'include',
         headers: {
             "Content-Type": "application/json",
