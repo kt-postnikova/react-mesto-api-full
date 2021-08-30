@@ -60,7 +60,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
 
-      res.cookie('jwt', token, { maxAge: 3600000, httpOnly: true, sameSite: true, secure: true }).send({ token });
+      res.cookie('jwt', token, { maxAge: 3600000, httpOnly: true, sameSite: 'None', secure: true }).send({ token });
     })
     .catch(next);
 };
