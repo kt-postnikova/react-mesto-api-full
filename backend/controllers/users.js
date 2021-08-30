@@ -61,7 +61,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'express-dev-key', { expiresIn: '7d' });
 
-      res.cookie('jwt', token, { maxAge: 3600000, httpOnly: true, sameSite: true, secure: true }).send({ token });
+      res.cookie('jwt', token, { maxAge: 3600000, httpOnly: true, sameSite: 'none', secure: true }).send({ token });
     })
     .catch(next);
 };
