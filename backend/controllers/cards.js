@@ -7,9 +7,6 @@ const getCards = (req, res, next) => {
   const userId = req.user._id;
   Card.find({ owner: userId })
     .then((cards) => {
-      // if (cards.length === 0) {
-      //   throw new NotFoundError('Карточки не найдены');
-      // }
       res.send(cards);
     })
     .catch(next);
