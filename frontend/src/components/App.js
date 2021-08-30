@@ -182,37 +182,42 @@ function App() {
   }, [loggedIn])
 
 
-  const handleTokenCheck = React.useCallback(() => {
-    apiAuth.checkToken()
-      .then((res) => {
-        setEmail(res.email);
-        setLoggedIn(true);
-        history.push('./main-page');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [history])
-
-  React.useEffect(() => {
-    handleTokenCheck();
-  }, [handleTokenCheck])
-
-  // function tokenCheck() {
-  //   apiAuth.checkToken()
-  //     .then((res) => {
-  //       setLoggedIn(true);
-  //       setEmail(res.email);
-  //       history.push('./main-page')
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }
+  // const handleTokenCheck = React.useCallback(() => {
+  //   if (!loggedIn) {
+  //     apiAuth.checkToken()
+  //       .then((res) => {
+  //         setEmail(res.email);
+  //         setLoggedIn(true);
+  //         history.push('./main-page');
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }, [history])
 
   // React.useEffect(() => {
-  //   tokenCheck()
-  // }, [])
+  //   handleTokenCheck();
+  // }, [handleTokenCheck])
+
+  function tokenCheck() {
+    if (loggedIn) {
+      history.push('./main-page')
+      // apiAuth.checkToken()
+      //   .then((res) => {
+      //     setLoggedIn(true);
+      //     setEmail(res.email);
+      //     history.push('./main-page')
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   })
+    }
+  }
+
+  React.useEffect(() => {
+    tokenCheck()
+  }, [])
 
   // function signOut() {
   //   localStorage.removeItem('token');
@@ -227,9 +232,11 @@ function App() {
   // }
 
 
-  const signOut = () => {
+  function signOut() {
     apiAuth.signOut()
     setLoggedIn(false)
+    setCards([])
+    setCurrentUser({})
     history.push('/signin')
   }
 
