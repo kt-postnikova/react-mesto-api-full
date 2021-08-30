@@ -212,7 +212,7 @@ function App() {
     //   })
     history.push('/signin');
     setLoggedIn(false);
-    cookies.remove('jwt', { path: '/' });
+    cookies.remove('jwt');
   }
 
   return (
