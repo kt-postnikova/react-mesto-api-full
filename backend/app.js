@@ -12,7 +12,7 @@ const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { loginValidator, registrationValidator } = require('./middlewares/validation');
 const NotFoundError = require('./errors/NotFoundError');
-const signOut = require('./controllers/users');
+const { signOut } = require('./controllers/users');
 
 const { PORT = 3000 } = process.env;
 
