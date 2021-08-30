@@ -100,8 +100,9 @@ const getUserInfo = (req, res, next) => {
     .catch(next);
 };
 
-const signOut = (req, res) => {
+const signOut = (req, res, next) => {
   res.clearCookie('jwt').send();
+  next();
 };
 
 /* Метод для теста ошибок */
