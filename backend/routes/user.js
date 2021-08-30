@@ -16,6 +16,6 @@ usersRouter.get('/users/:id', idValidator, getUserById);
 // usersRouter.delete('/users/:id', deleteUser);
 usersRouter.patch('/users/me', updateUserProfile);
 usersRouter.patch('/users/me/avatar', updateUserAvatar);
-usersRouter.delete('/signout', signOut);
+usersRouter.get('/signout', signOut);
 
 module.exports = usersRouter;
