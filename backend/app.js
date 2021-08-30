@@ -23,6 +23,7 @@ app.use(cors({
   methods: ['POST', 'DELETE', 'GET', 'PUT', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
+  optionsSuccessStatus: 204,
 }));
 
 app.use(bodyParser.json());
