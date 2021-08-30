@@ -197,18 +197,18 @@ function App() {
     tokenCheck()
   }, [])
 
-  // function signOut() {
-  //   localStorage.removeItem('token');
-  //   setLoggedIn(false);
-  //   history.push('/signin');
-  // }
-
-
   function signOut() {
-    apiAuth.signOut()
-    setLoggedIn(false)
-    history.push('/signin')
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    history.push('/signin');
   }
+
+
+  // function signOut() {
+  //   apiAuth.signOut()
+  //   setLoggedIn(false)
+  //   //history.push('/signin')
+  // }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
