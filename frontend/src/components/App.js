@@ -203,18 +203,18 @@ function App() {
   //   history.push('/signin');
   // }
 
-  const signOut = () => {
-    setLoggedIn(false);
-    localStorage.removeItem('jwt');
-    history.push('/signin');
-  }
-
-
   // const signOut = () => {
-  //   apiAuth.signOut()
-  //   setLoggedIn(false)
-  //   history.push('/signin')
+  //   setLoggedIn(false);
+  //   localStorage.removeItem('jwt');
+  //   history.push('/signin');
   // }
+
+
+  const signOut = () => {
+    apiAuth.signOut()
+    setLoggedIn(false)
+    history.push('/signin')
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
