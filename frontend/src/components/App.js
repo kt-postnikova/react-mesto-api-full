@@ -37,22 +37,23 @@ function App() {
   const history = useHistory();
 
 
-  React.useEffect(() => {
-    Promise.all([
-      api.getCards(),
-      api.getUserInfo()
-    ])
-      .then(res => {
-        const cardsArray = res[0];
-        const userInfo = res[1];
+  // React.useEffect(() => {
+  //   Promise.all([
+  //     api.getCards(),
+  //     api.getUserInfo()
+  //   ])
+  //     .then(res => {
+  //       const cardsArray = res[0];
+  //       const userInfo = res[1];
+  //       console.log(userInfo);
 
-        setCards(cardsArray);
-        setCurrentUser(userInfo)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, [])
+  //       setCards(cardsArray);
+  //       setCurrentUser(userInfo)
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }, [])
 
 
 
@@ -80,11 +81,11 @@ function App() {
     setSelectedCard(card)
   }
 
-  function handleUpdateUser(card) {
-    api.editUserInfo(card)
-      .then(res => {
-        setCurrentUser(res);
-
+  function handleUpdateUser(userInfo) {
+    console.log(userInfo);
+    api.editUserInfo(userInfo)
+      .then(() => {
+        setCurrentUser(userInfo);
         setEditProfilePopupOpen(false);
       })
       .catch(err => {
@@ -93,11 +94,10 @@ function App() {
 
   }
 
-  function handleUpdateAvatar(card) {
-    api.editAvatar(card)
-      .then(res => {
-        setCurrentUser(res);
-
+  function handleUpdateAvatar(userAvatar) {
+    api.editAvatar(userAvatar)
+      .then(() => {
+        setCurrentUser(userAvatar);
         setEditAvatarPopupOpen(false)
       })
       .catch(err => {
@@ -107,7 +107,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -175,22 +175,57 @@ function App() {
       })
   }
 
-
-  function tokenCheck() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      apiAuth.getContent(token)
-        .then(res => {
-          if (res) {
-            setLoggedIn(true);
-            setEmail(res.data.email);
-            history.push('./main-page')
-          }
+  React.useEffect(() => {
+    if (loggedIn) {
+      api.getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo)
         })
         .catch(err => {
           console.log(err);
         })
     }
+  }, [loggedIn])
+
+  React.useEffect(() => {
+    if (loggedIn) {
+      api.getCards()
+        .then((cardsArray) => {
+          setCards(cardsArray);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  }, [loggedIn])
+
+  // function tokenCheck() {
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     apiAuth.getContent(token)
+  //       .then(res => {
+  //         if (res) {
+  //           setLoggedIn(true);
+  //           setEmail(res.data.email);
+  //           history.push('./main-page')
+  //         }
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       })
+  //   }
+  // }
+
+  function tokenCheck() {
+    apiAuth.checkToken()
+      .then((res) => {
+        setLoggedIn(true);
+        setEmail(res.email);
+        history.push('./main-page')
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   React.useEffect(() => {
