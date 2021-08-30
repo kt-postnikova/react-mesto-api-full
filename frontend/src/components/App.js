@@ -19,6 +19,7 @@ import Login from './Login';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import okImage from '../images/ok.svg';
 import errorImage from '../images/error.svg';
+import { useCookies } from "react-cookie";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -35,6 +36,8 @@ function App() {
   const [message, setMessage] = React.useState({ image: '', info: '' });
 
   const history = useHistory();
+
+  const [cookies, setCookie, removeCookie] = useCookies(["jwt"]);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -200,12 +203,16 @@ function App() {
   //   history.push('/signin');
   // }
 
+
   function signOut() {
-    apiAuth.signOut()
-      .then(() => {
-        setLoggedIn(false);
-        history.push('/signin');
-      })
+    // apiAuth.signOut()
+    //   .then(() => {
+    //     setLoggedIn(false);
+    //     history.push('/signin');
+    //   })
+    history.push('/signin');
+    setLoggedIn(false);
+    cookies.remove('jwt', { path: '/' });
   }
 
   return (
