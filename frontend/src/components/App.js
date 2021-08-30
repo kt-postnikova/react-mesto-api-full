@@ -233,9 +233,17 @@ function App() {
   }, [])
 
   function signOut() {
-    localStorage.removeItem('token');
-    setLoggedIn(false);
-    history.push('/signin');
+    // localStorage.removeItem('token');
+    // setLoggedIn(false);
+    // history.push('/signin');
+    apiAuth.signOut()
+      .then(() => {
+        setLoggedIn(false);
+        history.push('/signin');
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   return (
