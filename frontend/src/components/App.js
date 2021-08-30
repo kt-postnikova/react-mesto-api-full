@@ -194,10 +194,18 @@ function App() {
     tokenCheck()
   }, [])
 
+  // function signOut() {
+  //   localStorage.removeItem('token');
+  //   setLoggedIn(false);
+  //   history.push('/signin');
+  // }
+
   function signOut() {
-    localStorage.removeItem('token');
-    setLoggedIn(false);
-    history.push('/signin');
+    apiAuth.signOut()
+      .then(() => {
+        setLoggedIn(false);
+        history.push('/signin');
+      })
   }
 
   return (
