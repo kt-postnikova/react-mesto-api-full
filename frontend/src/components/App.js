@@ -181,21 +181,38 @@ function App() {
     }
   }, [loggedIn])
 
-  function tokenCheck() {
+
+  const handleTokenCheck = React.useCallback(() => {
     apiAuth.checkToken()
       .then((res) => {
-        setLoggedIn(true);
         setEmail(res.email);
-        history.push('./main-page')
+        setLoggedIn(true);
+        history.push('./main-page');
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
-  }
+      });
+  }, [history])
 
   React.useEffect(() => {
-    tokenCheck()
-  }, [])
+    handleTokenCheck();
+  }, [handleTokenCheck])
+
+  // function tokenCheck() {
+  //   apiAuth.checkToken()
+  //     .then((res) => {
+  //       setLoggedIn(true);
+  //       setEmail(res.email);
+  //       history.push('./main-page')
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }
+
+  // React.useEffect(() => {
+  //   tokenCheck()
+  // }, [])
 
   // function signOut() {
   //   localStorage.removeItem('token');
