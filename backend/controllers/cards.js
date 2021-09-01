@@ -3,9 +3,17 @@ const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
+// const getCards = (req, res, next) => {
+//   const userId = req.user._id;
+//   Card.find({ owner: userId })
+//     .then((cards) => {
+//       res.send(cards);
+//     })
+//     .catch(next);
+// };
+
 const getCards = (req, res, next) => {
-  const userId = req.user._id;
-  Card.find({ owner: userId })
+  Card.find({})
     .then((cards) => {
       res.send(cards);
     })
