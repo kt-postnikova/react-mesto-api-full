@@ -17,6 +17,19 @@ const cardValidator = celebrate({
   }),
 });
 
+const userInfoValidator = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().required().min(2).max(20),
+  }),
+});
+
+const avatarValidation = celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().required().custom(urlCheck),
+  }),
+});
+
 const loginValidator = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
@@ -34,13 +47,17 @@ const registrationValidator = celebrate({
   }),
 });
 
-const idValidator = celebrate(
-  { params: Joi.object().keys({ id: Joi.string().alphanum().length(24).hex() }) },
-);
+const idValidator = celebrate({
+  params: Joi.object().keys({
+    id: Joi.string().alphanum().length(24).hex(),
+  }),
+});
 
 module.exports = {
   cardValidator,
   idValidator,
+  userInfoValidator,
+  avatarValidation,
   loginValidator,
   registrationValidator,
 };
