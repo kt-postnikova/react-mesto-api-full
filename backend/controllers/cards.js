@@ -3,22 +3,17 @@ const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
-// const getCards = (req, res, next) => {
-//   const userId = req.user._id;
-//   Card.find({
-//     owner: userId,
-//   })
-//     .then((cards) => {
-//       res.send(cards);
-//     })
-//     .catch(next);
-// };
-
 const getCards = (req, res, next) => {
-  Card.find({})
-    .then((cards) => { res.send(cards) })
+  const userId = req.user._id;
+  Card.find({
+    owner: userId,
+  })
+    .then((cards) => {
+      res.send(cards);
+    })
     .catch(next);
 };
+
 
 const createCard = (req, res, next) => {
   const owner = req.user._id;
