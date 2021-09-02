@@ -13,7 +13,9 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return validator.isURL(v, { require_protocol: true });
+        return validator.isURL(v, {
+          require_protocol: true,
+        });
       },
     },
   },
@@ -30,6 +32,10 @@ const cardSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-}, { versionKey: false }, { versionKey: false });
+}, {
+  versionKey: false,
+}, {
+  versionKey: false,
+});
 
 module.exports = mongoose.model('card', cardSchema);

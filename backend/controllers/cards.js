@@ -3,12 +3,20 @@ const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 
+// const getCards = (req, res, next) => {
+//   const userId = req.user._id;
+//   Card.find({
+//     owner: userId,
+//   })
+//     .then((cards) => {
+//       res.send(cards);
+//     })
+//     .catch(next);
+// };
+
 const getCards = (req, res, next) => {
-  const userId = req.user._id;
-  Card.find({ owner: userId })
-    .then((cards) => {
-      res.send(cards);
-    })
+  Card.find({})
+    .then((cards) => { res.send(cards) })
     .catch(next);
 };
 
@@ -16,7 +24,9 @@ const createCard = (req, res, next) => {
   const owner = req.user._id;
   const { name, link } = req.body;
 
-  Card.create({ name, link, owner })
+  Card.create({
+    name, link, owner,
+  })
     .then((cards) => res.send(cards))
     .catch((err) => {
       if (err.statusCode === 400) {
@@ -37,7 +47,9 @@ const deleteCard = (req, res, next) => {
             if (!deletedCard) {
               throw new NotFoundError('Карточка не найдена');
             }
-            res.send({ data: deletedCard });
+            res.send({
+              data: deletedCard,
+            });
           });
       } else {
         throw new ForbiddenError('Нет доступа к данным');
@@ -55,7 +67,13 @@ const deleteCard = (req, res, next) => {
 };
 
 const putLike = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.id, { $addToSet: { likes: req.user._id } }, { new: true })
+  Card.findByIdAndUpdate(req.params.id, {
+    $addToSet: {
+      likes: req.user._id,
+    },
+  }, {
+    new: true,
+  })
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
@@ -74,7 +92,13 @@ const putLike = (req, res, next) => {
 };
 
 const deleteLike = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.id, { $pull: { likes: req.user._id } }, { new: true })
+  Card.findByIdAndUpdate(req.params.id, {
+    $pull: {
+      likes: req.user._id,
+    },
+  }, {
+    new: true,
+  })
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');

@@ -23,7 +23,11 @@
     "object-curly-newline": [
       "error",
       {
-        "multiline": true
+        "ObjectExpression": "always",
+        "ObjectPattern": {
+          "multiline": true
+        },
+        "ImportDeclaration": "never",
       }
     ]
   }

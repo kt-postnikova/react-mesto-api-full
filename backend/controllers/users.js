@@ -8,7 +8,8 @@ const BadRequestError = require('../errors/BadRequestError');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUsers = (req, res, next) => {
-  User.find({})
+  User.find({
+  })
     .then((users) => {
       if (users.length === 0) {
         throw new NotFoundError('Пользователи не найдены');
@@ -33,7 +34,7 @@ const createUser = (req, res, next) => {
   const { name, email, password, about, avatar } = req.body;
 
   bcrypt.hash(password, 10)
-    .then((hash) => User.create({ email, password: hash, name, about, avatar }))
+    .then((hash) => User.create({ email, password: hash, name, about, avatar, }))
     .then((user) => res.send(
       {
         email: user.email,
@@ -58,7 +59,9 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'express-dev-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'express-dev-key', {
+        expiresIn: '7d',
+      });
 
       res.cookie('jwt', token, { maxAge: 3600000, httpOnly: true, sameSite: 'none', secure: true }).send({ token });
     })
@@ -83,8 +86,12 @@ const updateUserProfile = (req, res, next) => {
 
 const updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
-    .then((userAvatar) => res.send({ avatar: userAvatar.avatar }))
+  User.findByIdAndUpdate(req.user._id, { avatar }, {
+    new: true, runValidators: true,
+  })
+    .then((userAvatar) => res.send({
+      avatar: userAvatar.avatar,
+    }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         throw new BadRequestError('Переданы некорректные данные');
