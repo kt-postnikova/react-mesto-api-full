@@ -7,13 +7,13 @@ const {
   updateUserProfile,
   updateUserAvatar,
 } = require('../controllers/users');
-const { idValidator } = require('../middlewares/validation');
+const { idValidator, userInfoValidator } = require('../middlewares/validation');
 
 usersRouter.get('/users', getUsers);
 usersRouter.get('/users/me', getUserInfo);
 usersRouter.get('/users/:id', idValidator, getUserById);
 // usersRouter.delete('/users/:id', deleteUser);
-usersRouter.patch('/users/me', updateUserProfile);
-usersRouter.patch('/users/me/avatar', updateUserAvatar);
+usersRouter.patch('/users/me', userInfoValidator, updateUserProfile);
+usersRouter.patch('/users/me/avatar', userInfoValidator, updateUserAvatar);
 
 module.exports = usersRouter;
